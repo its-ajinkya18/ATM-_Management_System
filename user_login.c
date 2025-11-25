@@ -1,5 +1,5 @@
 #include "main.h"
-void login(Accounts *account) {
+void user_login(Accounts *account) {
     char account_no[20], pin[10];
     printf("Enter your 10 digit Account number : ");
     scanf(" %[^\n]s",account_no);
@@ -44,20 +44,24 @@ void login(Accounts *account) {
     } while (option != 6);
 }
 void view_details(Accounts *account, int pos) {
-    printf("Name\t\t : %s\n",account->details[pos].name);
-    printf("Account number\t : %s\n",account->details[pos].account_no);
-    printf("Balance\t\t : %.2f\n",account->details[pos].balance);
-    printf("PIN\t\t : %s\n\n",account->details[pos].pin);
+    printf("\nName\t\t : %s\n",account->details[pos].name);
+    printf("Account number\t : %s\n\n",account->details[pos].account_no);
+    // printf("Balance\t\t : %.2f\n",account->details[pos].balance);
+    // printf("PIN\t\t : %s\n\n",account->details[pos].pin);
 }
 void check_balance(Accounts *account, int pos) {
-    printf("Your Account Balance = %.2f\n\n",account->details[pos].balance);
+    printf("\nYour Account Balance = %.2f\n\n",account->details[pos].balance);
 }
 void deposit(Accounts *account, int pos) {
-    float amount;
-    printf("How much Amount you want to Deposit : ");
-    scanf("%f",&amount);
+    int amount;
+    printf("\nEnter Amount to Deposit : ");
+    scanf("%d",&amount);
     if(amount < 0) {
         printf("Invalide Amount!\n\n");
+        return;
+    }
+    else if(amount > 10000) {
+        printf("You can Deposite upto 10000\n\n");
         return;
     }
     account->details[pos].balance = account->details[pos].balance + amount;
@@ -65,26 +69,36 @@ void deposit(Accounts *account, int pos) {
     printf("Amount Deposited Successfully\n\n");
 }
 void Withdrawal(Accounts *account, int pos) {
-    float amount;
-    printf("How much Amount you want to Withdrawal : ");
-    scanf("%f",&amount);
-    if(amount > account->details[pos].balance) {
-        printf("Amount is greter than Account balance\nWithdrawal failed\n\n");
+    int amount;
+    printf("\nEnter Amount to Withdrawal : ");
+    scanf("%d",&amount);
+    if(amount < 0) {
+        printf("Invalide Amount!\n\n");
+        return;
+    }
+    if(amount > 10000) {
+        printf("You can Withdrawal upto 10000\n\n");
+        return;
+    }
+    else if(amount > account->details[pos].balance) {
+        printf("Insufficient Balance\nWithdrawal failed\n\n");
         return;
     }
     account->details[pos].balance = account->details[pos].balance - amount;
     save_details(account);
-    printf("Amount nWithdrawal Successfully\n\n");
+    printf("Amount Withdrawal Successfully\n\n");
 }
-void change_pin(Accounts *account, int pos) {
+int change_pin(Accounts *account, int pos) {
     char new_pin[10];
-    printf("Enter new PIN : ");
+    printf("\nEnter new PIN : ");
     scanf(" %[^\n]s",new_pin);
+    validate_pin(new_pin);
     if(strcmp(new_pin, account->details[pos].pin) == 0) {
         printf("New PIN matches with Current PIN\nPlease take another PIN\n");
-        return;
+        return FAILURE;
     }
     strcpy(account->details[pos].pin, new_pin);
     save_details(account);
     printf("PIN changed Successfully\n\n");
+    return SUCCESS;
 }

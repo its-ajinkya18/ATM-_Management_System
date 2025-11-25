@@ -27,19 +27,25 @@ typedef enum
 }Status;
 
 extern int pos;
+extern char *admin_pass, *user_name;
 
 void create_account(Accounts *account);
-void login(Accounts *account);
+void user_login(Accounts *account);
+void admin_login(Accounts *account);
 void validate_name(char name[]);
 void validate_account_no(char account_no[]);
 void validate_pin(char pin[]);
 void search_account_no(Accounts *account, char account_no[]);
 Status check_pin(Accounts *account, char account_no[], char pin[], int *pos);
+Status check_admin(char *username, char *pass);
 void load_details(Accounts *account);
 void save_details(Accounts *account);
 void view_details(Accounts *account, int pos);
 void check_balance(Accounts *account, int pos);
 void deposit(Accounts *account, int pos);
 void Withdrawal(Accounts *account, int pos);
-void change_pin(Accounts *account, int pos);
+int change_pin(Accounts *account, int pos);
+int view_acc_cnt(Accounts *account);
+int search_acc(Accounts *account);
+int delete_acc(Accounts *account);
 #endif

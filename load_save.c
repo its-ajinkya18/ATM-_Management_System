@@ -7,7 +7,7 @@ void load_details(Accounts *account) {
     }
     fscanf(fptr,"#%d\n",&(account->account_count));
     for(int i=0;i<account->account_count;i++)
-        fscanf(fptr,"%[^,],%[^,],%f,%[^\n]",account->details[i].name,account->details[i].account_no,&account->details[i].balance,account->details[i].pin);
+        fscanf(fptr,"%[^,],%[^,],%f,%[^\n]\n",account->details[i].name,account->details[i].account_no,&account->details[i].balance,account->details[i].pin);
     fclose(fptr);
 }
 

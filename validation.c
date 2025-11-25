@@ -19,7 +19,7 @@ void validate_name(char name[]) {
 void validate_account_no(char account_no[]) {
     int count=0,flag=0,num;
     for(int i=0;account_no[i]!='\0';i++){
-        if(account_no[i]>='0' && account_no[i]<='9') {
+        if(account_no[0] != '0' && (account_no[i]>='0' && account_no[i]<='9')) {
             count++;
             continue;
         }
@@ -79,5 +79,9 @@ Status check_pin(Accounts *account, char account_no[], char pin[], int *pos) {
             return SUCCESS;
         }
     }
+    return FAILURE;
+}
+Status check_admin(char *username, char *password) {
+    if((strcmp(user_name, username) == 0) && (strcmp(password, admin_pass) == 0)) return SUCCESS;
     return FAILURE;
 }

@@ -1,5 +1,6 @@
 #include "main.h"
 int pos;
+char *admin_pass = "2025", *user_name = "Admin";
 int main()
 {
     Accounts account;
@@ -8,7 +9,7 @@ int main()
     int option;
     do
     {
-        printf("1. Create Account\n2. Login into your Account\n3. Exit\n");
+        printf("1. Create Account\n2. User login\n3. Admin login\n4. Exit\n");
         printf("Enter the choice : ");
         scanf("%d",&option); 
         switch (option)
@@ -17,9 +18,12 @@ int main()
             create_account(&account);
             break;
         case 2:
-            login(&account);
+            user_login(&account);
             break;
         case 3:
+            admin_login(&account);
+            break;
+        case 4:
             printf("Exiting ATM!\n");
             printf("\n---------------Thank you---------------\n");
             break;
@@ -27,6 +31,6 @@ int main()
             printf("Enter valid option.\n");
             break;
         }  
-    } while (option != 3);
+    } while (option != 4);
     return 0;   
 }
